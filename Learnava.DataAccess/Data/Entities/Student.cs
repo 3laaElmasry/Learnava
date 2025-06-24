@@ -14,6 +14,6 @@ namespace Learnava.DataAccess.Data.Entities
         public ApplicationUser? ApplicationUser { get; set; }
 
         [ValidateNever]
-        IEnumerable<Course> Courses { get; set; } = new List<Course>();
+       public IEnumerable<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
 }

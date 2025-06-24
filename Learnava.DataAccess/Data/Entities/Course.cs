@@ -17,5 +17,9 @@ namespace Learnava.DataAccess.Data.Entities
 
         [ValidateNever]
         public ApplicationUser? Instructor { get; set; }
+
+        [ValidateNever]
+
+        public IEnumerable<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
 }

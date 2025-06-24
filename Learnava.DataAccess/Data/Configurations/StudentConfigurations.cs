@@ -16,8 +16,6 @@ namespace Learnava.DataAccess.Data.Configurations
                 .WithOne()
                 .HasForeignKey<Student>(s => s.ApplicationUserId)
                 .IsRequired();
-
-
         }
     }
 }
