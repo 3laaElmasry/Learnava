@@ -363,6 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # App Settings (Sensitive)
-appsettings.json
-appsettings.*.json
+Learnava.web/appsettings.json
+Learnava.web/appsettings.*.json
 !appsettings.Template.json
