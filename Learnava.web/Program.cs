@@ -1,9 +1,15 @@
 
+using Learnava.DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<ApplicationDbConetxt>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

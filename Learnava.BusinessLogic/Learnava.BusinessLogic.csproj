@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Learnava.DataAccess\Learnava.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
