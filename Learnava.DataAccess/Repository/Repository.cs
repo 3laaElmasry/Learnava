@@ -7,10 +7,10 @@ namespace Learnava.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbConetxt _db;
+        private readonly ApplicationDbContext _db;
         private readonly DbSet<T> dbSet;
 
-        public Repository(ApplicationDbConetxt db)
+        public Repository(ApplicationDbContext db)
         {
             _db = db;
             dbSet = db.Set<T>();

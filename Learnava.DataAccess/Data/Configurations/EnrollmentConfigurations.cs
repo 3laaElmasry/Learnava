@@ -14,11 +14,13 @@ namespace Learnava.DataAccess.Data.Configurations
 
             builder.HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)
-                .HasForeignKey(e => e.StudentId);
+                .HasForeignKey(e => e.StudentId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(e => e.Course)
                 .WithMany(c => c.Enrollments)
-                .HasForeignKey(e => e.CourseId);
+                .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

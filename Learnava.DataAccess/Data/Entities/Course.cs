@@ -13,7 +13,7 @@ namespace Learnava.DataAccess.Data.Entities
 
         public DateTime CreatedAt { get; set; }
 
-        public Guid InstructorId { get; set; }
+        public string InstructorId { get; set; } = string.Empty ;
 
         [ValidateNever]
         public ApplicationUser? Instructor { get; set; }

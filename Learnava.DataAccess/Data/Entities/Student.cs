@@ -7,7 +7,7 @@ namespace Learnava.DataAccess.Data.Entities
     public class Student
     {
         public int Id { get; set; }
-        public Guid ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; } = string.Empty;
 
 
         [ValidateNever]

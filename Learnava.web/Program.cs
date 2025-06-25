@@ -1,15 +1,35 @@
 
 using Learnava.DataAccess.Data;
+using Learnava.DataAccess.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbConetxt>(options =>
+
+
+
+// Configure Identity with relaxed password requirements
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireDigit = false;
+})
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:defaultConnection"]);
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
