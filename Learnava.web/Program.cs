@@ -2,6 +2,7 @@
 using Learnava.BusinessLogic.Services;
 using Learnava.DataAccess.Data;
 using Learnava.DataAccess.Data.Entities;
+using Learnava.DataAccess.DbIntilizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -38,6 +39,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -60,4 +63,14 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+await SeedDatabaseAsync();
+
 app.Run();
+
+
+async Task SeedDatabaseAsync()
+{
+    using var scope = app.Services.CreateScope();
+    var initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await initializer.InitializeAsync();
+}
