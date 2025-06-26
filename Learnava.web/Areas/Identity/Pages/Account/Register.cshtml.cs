@@ -36,7 +36,6 @@ namespace Learnava.web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly EmailSenderService emailSender;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -226,7 +225,7 @@ namespace Learnava.web.Areas.Identity.Pages.Account
         private async Task SendConfirmationEmail(string email, ApplicationUser user)
         {
             // Generate the email confirmation token
-            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             // Build the confirmation callback URL
             var confirmationLink = Url.Action("ConfirmEmail", "Account",
@@ -242,7 +241,7 @@ namespace Learnava.web.Areas.Identity.Pages.Account
             // Customize inline styles, text, and branding as needed
             var messageBody = $@"
         <div style=""font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:#333;"">
-            <p>Hi {user.FirstName} {user.LastName},</p>
+            <p>Hi {user.FullName},</p>
 
             <p>Thank you for creating an account at <strong>Dot Net Tutorials</strong>.
             To start enjoying all of our features, please confirm your email address by clicking the button below:</p>
@@ -268,7 +267,7 @@ namespace Learnava.web.Areas.Identity.Pages.Account
     ";
 
             //Send the Confirmation Email to the User Email Id
-            await emailSender.SendEmailAsync(email, subject, messageBody, true);
+            await _emailSender.SendEmailAsync(email, subject, messageBody);
         }
     }
 }
