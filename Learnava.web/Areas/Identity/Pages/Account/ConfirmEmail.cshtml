@@ -1,8 +1,43 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Email Confirmation";
+    var status = Model.StatusMessage;
+    var isSuccess = !string.IsNullOrEmpty(status) && !status.Contains("error", System.StringComparison.OrdinalIgnoreCase);
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Email Confirmation</h3>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(status))
+                    {
+                        <div class="alert @(isSuccess ? "alert-success" : "alert-danger")" role="alert">
+                            <strong>@(isSuccess ? "Success!" : "Oops!")</strong> @status
+                        </div>
+
+                        @if (isSuccess)
+                        {
+                            <p>
+                                You can now
+                                <a asp-page="/Account/Login" class="font-weight-bold">log in</a>
+                                and start using all the features of <strong>Dot Net Tutorials</strong>. Welcome aboard!
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                If the link has expired or was already used, you can
+                                <a asp-page="/Account/ResendEmailConfirmation" class="font-weight-bold">request a new confirmation email</a>.
+                            </p>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

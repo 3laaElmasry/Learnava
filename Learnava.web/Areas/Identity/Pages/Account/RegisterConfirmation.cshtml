@@ -1,0 +1,36 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Registration Successful";
+    var email = Model.Email;
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Registration Successful</h3>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Thank you for signing up with <strong>Learnava Academy</strong>!
+                        A confirmation email has been sent to <strong>@email</strong>.
+                        Before you can log in, please verify your email by clicking the link in your inbox.
+                    </p>
+
+                    <p>
+                        Didn’t receive the email or it expired? You can request a new one below.
+                    </p>
+
+                    <form method="post" asp-page="/Account/ResendEmailConfirmation">
+                        <input type="hidden" name="Email" value="@Model.Email" />
+                        <button type="submit" class="btn btn-primary">
+                            Resend Confirmation Email
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
