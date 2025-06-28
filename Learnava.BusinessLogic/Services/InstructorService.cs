@@ -7,10 +7,9 @@ namespace Learnava.BusinessLogic.Services
 {
     public class InstructorService : IInstructorService
     {
-        private readonly 
-        public Task<Instructor> Create(string userID)
+        public async Task<Instructor> Create(string userID)
         {
-
+            return  new Instructor();
         }
     }
 }
