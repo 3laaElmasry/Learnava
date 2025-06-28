@@ -6,6 +6,9 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Learnava.BusinessLogic.IServiceContracts;
+using Learnava.DataAccess;
+using Learnava.DataAccess.RepositoryContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +20,7 @@ namespace Learnava.web.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
-
+        private readonly IInstructorService _insService;
         public ConfirmEmailModel(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
@@ -44,7 +47,18 @@ namespace Learnava.web.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            if(!result.Succeeded)
+            {
+                StatusMessage = "Error confirming your email.";
+                return Page();
+            }
+
+            StatusMessage = "Thank you for confirming your email.";
+            
+            if(await _userManager.IsInRoleAsync(user, SD.Role_Instructor))
+            {
+                await _insService.Create(userId);
+            }
             return Page();
         }
     }
