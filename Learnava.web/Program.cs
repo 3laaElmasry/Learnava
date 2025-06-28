@@ -3,6 +3,8 @@ using Learnava.BusinessLogic.Services;
 using Learnava.DataAccess.Data;
 using Learnava.DataAccess.Data.Entities;
 using Learnava.DataAccess.DbIntilizer;
+using Learnava.DataAccess.Repository;
+using Learnava.DataAccess.RepositoryContracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -41,9 +43,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddRazorPages();
 
+//Enject Services
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
-
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
+
+//Enject Repositries
+builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 
 var app = builder.Build();
 
