@@ -21,9 +21,15 @@ namespace Learnava.web.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IInstructorService _insService;
-        public ConfirmEmailModel(UserManager<IdentityUser> userManager)
+        private readonly IStudentService _studentService;
+
+        public ConfirmEmailModel(UserManager<IdentityUser> userManager,
+            IInstructorService insService,
+            IStudentService studentService)
         {
             _userManager = userManager;
+            _insService = insService;
+            _studentService = studentService;
         }
 
         /// <summary>
@@ -59,6 +65,11 @@ namespace Learnava.web.Areas.Identity.Pages.Account
             {
                 await _insService.Create(userId);
             }
+            else if(await _userManager.IsInRoleAsync(user, SD.Role_Student))
+            {
+                await _studentService.Create(userId);
+            }
+
             return Page();
         }
     }
