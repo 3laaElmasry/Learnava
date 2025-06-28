@@ -1,4 +1,5 @@
 
+using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.BusinessLogic.Services;
 using Learnava.DataAccess.Data;
 using Learnava.DataAccess.Data.Entities;
@@ -46,7 +47,7 @@ builder.Services.AddRazorPages();
 //Enject Services
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
+builder.Services.AddScoped<IInstructorService, InstructorService>();
 
 //Enject Repositries
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
