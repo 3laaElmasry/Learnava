@@ -48,6 +48,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 //Enject Repositries
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
