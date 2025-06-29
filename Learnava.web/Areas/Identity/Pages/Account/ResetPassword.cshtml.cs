@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Learnava.web.Areas.Identity.Pages.Account
 {
@@ -97,8 +98,9 @@ namespace Learnava.web.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+
+                ModelState.AddModelError("", "Invalid User");
+                return Page();
             }
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
