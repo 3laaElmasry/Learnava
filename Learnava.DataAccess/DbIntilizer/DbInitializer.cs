@@ -134,23 +134,25 @@ namespace Learnava.DataAccess.DbIntilizer
                     var result = await _userManager.CreateAsync(instructorUser2, "ins123");
                     if (result.Succeeded)
                         await _userManager.AddToRoleAsync(instructorUser2, SD.Role_Instructor);
+                    await _context.Instructors.AddRangeAsync(new List<Instructor>
+                    {
+                        new Instructor()
+                        {
+                            ApplicationUserId = instructorUser.Id
+                        },
+                        new Instructor()
+                        {
+                            ApplicationUserId = instructorUser1.Id
+                        },
+                        new Instructor()
+                        {
+                            ApplicationUserId = instructorUser2.Id
+                        },
+                    });
+                    await _context.SaveChangesAsync();
                 }
 
-                await _context.Instructors.AddRangeAsync(new List<Instructor>
-                {
-                    new Instructor()
-                    {
-                        ApplicationUserId = instructorUser.Id
-                    },
-                    new Instructor()
-                    {
-                        ApplicationUserId = instructorUser1.Id
-                    }, 
-                    new Instructor()
-                    {
-                        ApplicationUserId = instructorUser2.Id
-                    },
-                });
+                
                 // Seed Student
                 var studentUser = new ApplicationUser
                 {
