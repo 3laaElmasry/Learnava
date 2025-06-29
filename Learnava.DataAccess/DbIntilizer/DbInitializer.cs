@@ -85,8 +85,8 @@ namespace Learnava.DataAccess.DbIntilizer
                 {
                     UserName = "ins@learnava.com",
                     Email = "ins@learnava.com",
-                    FullName = "Instructor One",
-                    PhoneNumber = "+201111111111",
+                    FullName = "Moshrif",
+                    PhoneNumber = "+201111111133",
                     Role = SD.Role_Instructor,
                     EmailConfirmed = true
                 };
@@ -97,6 +97,40 @@ namespace Learnava.DataAccess.DbIntilizer
                         await _userManager.AddToRoleAsync(instructorUser, SD.Role_Instructor);
                 }
 
+                // Seed Instructor
+                var instructorUser1 = new ApplicationUser
+                {
+                    UserName = "ins1@learnava.com",
+                    Email = "ins1@learnava.com",
+                    FullName = "Apo-Hadhoud",
+                    PhoneNumber = "+201111122222",
+                    Role = SD.Role_Instructor,
+                    EmailConfirmed = true
+                };
+                if (await _userManager.FindByEmailAsync(instructorUser1.Email) == null)
+                {
+                    var result = await _userManager.CreateAsync(instructorUser1, "ins123");
+                    if (result.Succeeded)
+                        await _userManager.AddToRoleAsync(instructorUser1, SD.Role_Instructor);
+                }
+
+
+                // Seed Instructor
+                var instructorUser2 = new ApplicationUser
+                {
+                    UserName = "ins2@learnava.com",
+                    Email = "ins2@learnava.com",
+                    FullName = "Adel-Nasim",
+                    PhoneNumber = "+201111111111",
+                    Role = SD.Role_Instructor,
+                    EmailConfirmed = true
+                };
+                if (await _userManager.FindByEmailAsync(instructorUser2.Email) == null)
+                {
+                    var result = await _userManager.CreateAsync(instructorUser2, "ins123");
+                    if (result.Succeeded)
+                        await _userManager.AddToRoleAsync(instructorUser2, SD.Role_Instructor);
+                }
                 // Seed Student
                 var studentUser = new ApplicationUser
                 {
