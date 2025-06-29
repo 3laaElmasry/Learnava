@@ -15,6 +15,8 @@ namespace Learnava.DataAccess.Data.Entities
 
         public string InstructorId { get; set; } = string.Empty ;
 
+        public string ImgUrl { get; set; } = string.Empty;
+
         [ValidateNever]
         public ApplicationUser? Instructor { get; set; }
 
