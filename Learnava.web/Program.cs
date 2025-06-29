@@ -49,6 +49,7 @@ builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 //Enject Repositries
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();

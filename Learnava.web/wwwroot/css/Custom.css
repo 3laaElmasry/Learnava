@@ -1,0 +1,15 @@
+﻿/* wwwroot/css/courses.css */
+.btn-custom {
+    background-color: #198754; /* Deep green */
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-custom:hover {
+        background-color: #146c43;
+    }
+
+.card-custom {
+    background-color: #f9fcf9;
+}

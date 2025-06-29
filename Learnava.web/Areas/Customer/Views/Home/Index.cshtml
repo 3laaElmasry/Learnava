@@ -1,38 +1,40 @@
-﻿@* @model IEnumerable<Course> *@
+﻿@model IEnumerable<Course>
 
-@* @{ *@
-@*     ViewData["Title"] = "Courses"; *@
-@* } *@
+@{
+    ViewData["Title"] = "Courses";
+}
 
-@* <div class="row pb-3"> *@
-@*     @foreach (var course in Model) *@
-@*     { *@
-@*         <div class="col-lg-3 col-sm-6 mb-4"> *@
-@*             <div class="card border-0 p-3 shadow border-top border-5 rounded"> *@
-@*                 <img src="@course.ImgUrl" class="card-img-top rounded" alt="@course.Title" /> *@
 
-@*                 <div class="card-body pb-0"> *@
-@*                     <h5 class="card-title text-center text-dark text-uppercase opacity-75">@course.Title</h5> *@
-@*                     <p class="text-center text-muted mb-1" style="font-size: 0.9rem;"> *@
-@*                         Created: @course.CreatedAt.ToString("MMMM yyyy") *@
-@*                     </p> *@
-@*                     @if (course.Instructor != null) *@
-@*                     { *@
-@*                         <p class="text-warning text-center mb-0"> *@
-@*                             by <b>@course.Instructor.FullName</b> *@
-@*                         </p> *@
-@*                     } *@
-@*                 </div> *@
+<div class="row pb-3">
+    @foreach (var course in Model)
+    {
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card card-custom border-0 p-3 shadow border-top border-5 rounded bg-white">
+                <img src="~/D830905C-A877-4BD4-85DF-3182F281F63F.jpg" class="card-img-top rounded" alt="@course.Title" />
 
-@*                 <div class="p-2 mt-2"> *@
-@*                     <a asp-controller="Courses" *@
-@*                        asp-action="Details" *@
-@*                        asp-route-id="@course.Id" *@
-@*                        class="btn btn-primary bg-gradient border-0 w-100"> *@
-@*                         View Course *@
-@*                     </a> *@
-@*                 </div> *@
-@*             </div> *@
-@*         </div> *@
-@*     } *@
-@* </div> *@
+                <div class="card-body pb-0">
+                    <h5 class="card-title text-center text-dark text-uppercase opacity-75">@course.Title</h5>
+                    <p class="text-center text-secondary mb-1" style="font-size: 0.9rem;">
+                        Created: @course.CreatedAt.ToString("MMMM yyyy")
+                    </p>
+                    @if (course.Instructor != null)
+                    {
+                        <p class="text-secondary text-center mb-0">
+                            by <b>@course.Instructor.FullName</b>
+                        </p>
+                    }
+                </div>
+
+                <div class="p-2 mt-2">
+                    <a asp-controller="Courses"
+                       asp-action="Details"
+                       asp-route-id="@course.Id"
+                       class="btn btn-primary w-100">
+                        View Course
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,16 +8,17 @@ namespace Learnava.web.Areas.User.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ICourseService _courseService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ICourseService courseService)
         {
-            _logger = logger;
+            _courseService = courseService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var courses = await _courseService.GetCoursesAsync();
+            return View(courses);
         }
 
         public IActionResult Privacy()

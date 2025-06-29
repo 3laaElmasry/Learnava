@@ -64,7 +64,7 @@ namespace Learnava.DataAccess.Migrations
                             CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Learn Data Structures and use them to solve real world problems",
                             ImgUrl = "",
-                            InstructorId = "4e291191-3c5a-47d1-848f-360b881a65a1",
+                            InstructorId = "e4d92a7b-15a4-4f68-a0f4-de7c0ea63064",
                             Title = "Data Structures"
                         },
                         new
@@ -73,7 +73,7 @@ namespace Learnava.DataAccess.Migrations
                             CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Learn Algorithms and apply them in practice",
                             ImgUrl = "",
-                            InstructorId = "72f17693-c0e5-4d86-a115-1f3b0a66b37e",
+                            InstructorId = "c0241e9f-63de-4005-9508-be5d2c1fb8e7",
                             Title = "Algorithms"
                         },
                         new
@@ -82,7 +82,7 @@ namespace Learnava.DataAccess.Migrations
                             CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Master Object-Oriented Programming fundamentals",
                             ImgUrl = "",
-                            InstructorId = "eda80011-f522-48b7-9ede-e338e726f705",
+                            InstructorId = "03b35f2f-b6c6-48f8-8616-1ff545e6a864",
                             Title = "OOP"
                         });
                 });

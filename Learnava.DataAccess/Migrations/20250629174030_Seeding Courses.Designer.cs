@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnava.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250625143651_Init")]
-    partial class Init
+    [Migration("20250629174030_Seeding Courses")]
+    partial class SeedingCourses
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,10 @@ namespace Learnava.DataAccess.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("ImgUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("InstructorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -55,6 +59,35 @@ namespace Learnava.DataAccess.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Learn Data Structures and use them to solve real world problems",
+                            ImgUrl = "",
+                            InstructorId = "e4d92a7b-15a4-4f68-a0f4-de7c0ea63064",
+                            Title = "Data Structures"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Learn Algorithms and apply them in practice",
+                            ImgUrl = "",
+                            InstructorId = "c0241e9f-63de-4005-9508-be5d2c1fb8e7",
+                            Title = "Algorithms"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Master Object-Oriented Programming fundamentals",
+                            ImgUrl = "",
+                            InstructorId = "03b35f2f-b6c6-48f8-8616-1ff545e6a864",
+                            Title = "OOP"
+                        });
                 });
 
             modelBuilder.Entity("Learnava.DataAccess.Data.Entities.Enrollment", b =>
@@ -332,6 +365,10 @@ namespace Learnava.DataAccess.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
