@@ -5,6 +5,7 @@ using Learnava.DataAccess.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.X86;
 
 namespace Learnava.DataAccess.DbIntilizer
 {
@@ -14,17 +15,20 @@ namespace Learnava.DataAccess.DbIntilizer
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _db;
         private readonly ILogger<DbInitializer> _logger;
+        private readonly ApplicationDbContext _context;
 
         public DbInitializer(
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager,
             ApplicationDbContext db,
-            ILogger<DbInitializer> logger)
+            ILogger<DbInitializer> logger,
+            ApplicationDbContext context)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _db = db;
             _logger = logger;
+            _context = context;
         }
 
         public async Task InitializeAsync()
@@ -131,6 +135,22 @@ namespace Learnava.DataAccess.DbIntilizer
                     if (result.Succeeded)
                         await _userManager.AddToRoleAsync(instructorUser2, SD.Role_Instructor);
                 }
+
+                await _context.Instructors.AddRangeAsync(new List<Instructor>
+                {
+                    new Instructor()
+                    {
+                        ApplicationUserId = instructorUser.Id
+                    },
+                    new Instructor()
+                    {
+                        ApplicationUserId = instructorUser1.Id
+                    }, 
+                    new Instructor()
+                    {
+                        ApplicationUserId = instructorUser2.Id
+                    },
+                });
                 // Seed Student
                 var studentUser = new ApplicationUser
                 {
@@ -144,6 +164,10 @@ namespace Learnava.DataAccess.DbIntilizer
                 if (await _userManager.FindByEmailAsync(studentUser.Email) == null)
                 {
                     var result = await _userManager.CreateAsync(studentUser, "student123");
+                    await _context.Students.AddAsync(new Student()
+                    {
+                        ApplicationUserId = studentUser.Id
+                    });
                     if (result.Succeeded)
                         await _userManager.AddToRoleAsync(studentUser, SD.Role_Student);
                 }
