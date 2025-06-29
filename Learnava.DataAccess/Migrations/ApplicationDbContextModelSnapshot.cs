@@ -95,7 +95,8 @@ namespace Learnava.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
 
                     b.ToTable("Instructors");
                 });
@@ -375,8 +376,8 @@ namespace Learnava.DataAccess.Migrations
             modelBuilder.Entity("Learnava.DataAccess.Data.Entities.Instructor", b =>
                 {
                     b.HasOne("Learnava.DataAccess.Data.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .WithOne()
+                        .HasForeignKey("Learnava.DataAccess.Data.Entities.Instructor", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -5,7 +5,7 @@
 namespace Learnava.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedingInstructorTable : Migration
+    public partial class Unkonwn : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,8 @@ namespace Learnava.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Instructors_ApplicationUserId",
                 table: "Instructors",
-                column: "ApplicationUserId");
+                column: "ApplicationUserId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -30,8 +31,7 @@ namespace Learnava.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Instructors_ApplicationUserId",
                 table: "Instructors",
-                column: "ApplicationUserId",
-                unique: true);
+                column: "ApplicationUserId");
         }
     }
 }
