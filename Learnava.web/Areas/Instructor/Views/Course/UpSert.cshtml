@@ -1,0 +1,66 @@
+﻿@model Course
+
+@{
+    var actionName = Model.Id == 0 ? "Create" : "Edit";
+    ViewData["Title"] = $"{actionName} Course";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="col-12 text-center">
+        <h2 class="text-secondary py-2">@actionName Course</h2>
+    </div>
+
+    <div class="card-body p-4">
+        <form asp-action="Upsert" asp-controller="Course" asp-area="Instructor" method="post" enctype="multipart/form-data">
+            <input asp-for="Id" type="hidden" />
+            <div class="mb-4 text-center" >
+                <img src="~/D830905C-A877-4BD4-85DF-3182F281F63F.jpg" class="img-fluid rounded border" style="max-height: 200px;" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Instructor!.FullName" class="form-label">Instructor Name</label>
+                <input type="" asp-for="Instructor!.FullName" class="form-control" />
+                <span asp-validation-for="Instructor!.FullName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CreatedAt" class="form-label"></label>
+                <input asp-for="CreatedAt" type="datetime-local" class="form-control" readonly/>
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3">
+                <label asp-for="ImgUrl" class="form-label">Course Image URL</label>
+                <input type="file" name="file" class="form-control border-0 shadow" multiple />
+            </div>
+
+
+            <div class="row">
+                <div class="col-6 col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">@actionName</button>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-area="Instructor" asp-controller="Course" asp-action="UpSert" class="btn btn-outline-primary w-100">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
