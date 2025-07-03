@@ -4,6 +4,7 @@ using Learnava.DataAccess.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Update;
 
@@ -16,11 +17,13 @@ namespace Learnava.web.Areas.Instructor.Controllers
     {
         private readonly ICourseService _courseService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CourseController(ICourseService courseService, IWebHostEnvironment webHostEnvironment)
+        public CourseController(ICourseService courseService, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager)
         {
             _courseService = courseService;
             _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -32,14 +35,17 @@ namespace Learnava.web.Areas.Instructor.Controllers
         public async Task<IActionResult> UpSert(int? courseId)
         {
             var course = await _courseService.GetCourseByIdAsync(courseId);
+            string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
             if (course == null)
                 course = new()
                 {
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    Instructor = await _userManager.FindByIdAsync(userId),
+                    InstructorId = userId,
+                    
                 };
             else
             {
-                string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
                 if (userId != course.InstructorId && !User.IsInRole("Admin"))
                     return Forbid();

@@ -19,7 +19,7 @@ builder.Services.AddControllersWithViews();
 
 
 // Configure Identity with relaxed password requirements
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 6;

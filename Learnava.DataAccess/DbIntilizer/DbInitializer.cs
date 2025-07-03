@@ -12,14 +12,14 @@ namespace Learnava.DataAccess.DbIntilizer
     public class DbInitializer : IDbInitializer
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _db;
         private readonly ILogger<DbInitializer> _logger;
         private readonly ApplicationDbContext _context;
 
         public DbInitializer(
             RoleManager<IdentityRole> roleManager,
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             ApplicationDbContext db,
             ILogger<DbInitializer> logger,
             ApplicationDbContext context)

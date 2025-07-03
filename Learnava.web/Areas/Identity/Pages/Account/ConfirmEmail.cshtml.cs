@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess;
+using Learnava.DataAccess.Data.Entities;
 using Learnava.DataAccess.RepositoryContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,12 +20,12 @@ namespace Learnava.web.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IInstructorService _insService;
         private readonly IStudentService _studentService;
 
         public ConfirmEmailModel(UserManager<ApplicationUser> userManager,
-            IInstructorService insServiceIdentityUser
+            IInstructorService insService,
             IStudentService studentService)
         {
             _userManager = userManager;
