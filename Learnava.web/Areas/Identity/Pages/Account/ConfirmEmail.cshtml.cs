@@ -23,8 +23,8 @@ namespace Learnava.web.Areas.Identity.Pages.Account
         private readonly IInstructorService _insService;
         private readonly IStudentService _studentService;
 
-        public ConfirmEmailModel(UserManager<IdentityUser> userManager,
-            IInstructorService insService,
+        public ConfirmEmailModel(UserManager<ApplicationUser> userManager,
+            IInstructorService insServiceIdentityUser
             IStudentService studentService)
         {
             _userManager = userManager;
