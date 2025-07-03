@@ -14,7 +14,10 @@
         <form asp-action="Upsert" asp-controller="Course" asp-area="Instructor" method="post" enctype="multipart/form-data">
             <input asp-for="Id" type="hidden" />
             <div class="mb-4 text-center" >
-                <img src="~/D830905C-A877-4BD4-85DF-3182F281F63F.jpg" class="img-fluid rounded border" style="max-height: 200px;" />
+                @if (!String.IsNullOrEmpty(Model.ImgUrl))
+                {
+                    <img src="@Model.ImgUrl" class="img-fluid rounded border" style="max-height: 200px;" />
+                }
             </div>
 
             <div class="mb-3">
