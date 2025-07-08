@@ -14,5 +14,7 @@ namespace Learnava.BusinessLogic.IServiceContracts
         Task<Course> AddCourseAsync(Course course);
 
         Task<Course> UpdateCourseAsync(Course course);
+
+        Task<bool> DeleteCourseAsync(int courseId);
     }
 }

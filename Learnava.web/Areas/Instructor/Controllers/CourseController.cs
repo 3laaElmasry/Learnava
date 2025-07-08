@@ -121,11 +121,13 @@ namespace Learnava.web.Areas.Instructor.Controllers
             string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
             
 
-            if ( course.InstructorId != userId || !User.IsInRole(SD.Role_Admin))
+            if ( course.InstructorId != userId && !User.IsInRole(SD.Role_Admin))
             {
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
-            return View();
+            bool isDeleted = await _courseService.DeleteCourseAsync(courseId);
+
+            return Json(new { success = (isDeleted is true)?  true : false,  message = (isDeleted is true) ? "Delete Success" : "Deleted Fail" });
         }
 
         #region Api Calls

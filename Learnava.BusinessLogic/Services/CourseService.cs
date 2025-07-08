@@ -17,6 +17,8 @@ namespace Learnava.BusinessLogic.Services
             _courseRepository = courseRepository;
         }
 
+        
+
         public async Task<Course?> GetCourseByIdAsync(int? id, string? included = null)
         {
             var courseFromDb = await _courseRepository.GetAsync(c => c.Id == id, includeProperties: included);
@@ -34,6 +36,19 @@ namespace Learnava.BusinessLogic.Services
             await _courseRepository.AddAsync(course);
             await _courseRepository.Save();
             return course;
+        }
+
+        async Task<bool> ICourseService.DeleteCourseAsync(int courseId)
+        {
+            var courseFromDb = await _courseRepository.GetAsync(c => c.Id == courseId);
+
+            if(courseFromDb is null)
+            {
+                return false;
+            }
+            _courseRepository.Remove(courseFromDb);
+            await _courseRepository.Save();
+            return true;
         }
 
         async Task<Course> ICourseService.UpdateCourseAsync(Course course)
