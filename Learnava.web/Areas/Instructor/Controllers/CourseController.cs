@@ -29,6 +29,9 @@ namespace Learnava.web.Areas.Instructor.Controllers
 
         public async Task<IActionResult> Index()
         {
+            string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+            ApplicationUser? user = await _userManager.FindByIdAsync(userId);
+            ViewData["instructorName"] = user?.FullName;
             return View();
         }
 
@@ -51,7 +54,9 @@ namespace Learnava.web.Areas.Instructor.Controllers
             {
 
                 if (userId != course.InstructorId && !User.IsInRole(SD.Role_Admin))
-                    return Forbid();
+                {
+                    return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+                };
 
             }
 
