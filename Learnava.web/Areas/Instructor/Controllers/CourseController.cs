@@ -102,5 +102,25 @@ namespace Learnava.web.Areas.Instructor.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int courseId)
+        {
+            var course = await _courseService.GetCourseByIdAsync(courseId);
+
+            if (course is null)
+            {
+                return NotFound();
+            }
+            string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+            
+
+            if ( course.InstructorId != userId || !User.IsInRole(SD.Role_Admin))
+            {
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+            return View();
+        }
     }
 }
