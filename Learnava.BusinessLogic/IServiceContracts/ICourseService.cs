@@ -1,12 +1,13 @@
 ﻿
 
 using Learnava.DataAccess.Data.Entities;
+using System.Linq.Expressions;
 
 namespace Learnava.BusinessLogic.IServiceContracts
 {
     public interface ICourseService
     {
-        Task<IEnumerable<Course>> GetCoursesAsync();
+        Task<IEnumerable<Course>> GetCoursesAsync(Expression<Func<Course, bool>>? courseFilter = null, string ? included = null);
 
         Task<Course?> GetCourseByIdAsync(int? id,string? included = null);
 

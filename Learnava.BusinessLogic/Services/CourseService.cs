@@ -4,6 +4,7 @@ using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess.Data.Entities;
 using Learnava.DataAccess.RepositoryContracts;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace Learnava.BusinessLogic.Services
 {
@@ -22,9 +23,9 @@ namespace Learnava.BusinessLogic.Services
             return courseFromDb;
         }
 
-        public async Task<IEnumerable<Course>> GetCoursesAsync()
+        public async Task<IEnumerable<Course>> GetCoursesAsync(Expression<Func<Course, bool>>? courseFilter = null, string? included = null)
         {
-            var coursedFromDb = await _courseRepository.GetAllAsync(includeProperties: "Instructor");
+            var coursedFromDb = await _courseRepository.GetAllAsync(filter: courseFilter,includeProperties: included);
             return coursedFromDb;
         }
 

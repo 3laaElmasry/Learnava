@@ -109,7 +109,7 @@ namespace Learnava.web.Areas.Instructor.Controllers
         }
 
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int courseId)
         {
             var course = await _courseService.GetCourseByIdAsync(courseId);
@@ -127,5 +127,39 @@ namespace Learnava.web.Areas.Instructor.Controllers
             }
             return View();
         }
+
+        #region Api Calls
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            IEnumerable<Course> courses;
+
+            if (User.IsInRole(SD.Role_Admin))
+            {
+                courses = await _courseService.GetCoursesAsync(included:"Instructor");
+            }
+            else
+            {
+                courses = await _courseService.GetCoursesAsync(c => c.InstructorId == userId);
+            }
+
+            var result = courses.Select(c => new
+            {
+                c.Id,
+                c.Title,
+                c.Description,
+                c.CreatedAt,
+                instructorName = (c.Instructor is null) ? user!.FullName : c.Instructor.FullName,
+                instructorEmail = (c.Instructor is null) ? user!.Email : c.Instructor.Email,
+            });
+
+
+            return Json(new { data = result });
+        }
+        #endregion
     }
 }
