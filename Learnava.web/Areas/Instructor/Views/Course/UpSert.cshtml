@@ -12,7 +12,9 @@
 
     <div class="card-body p-4">
         <form asp-action="Upsert" asp-controller="Course" asp-area="Instructor" method="post" enctype="multipart/form-data">
-            <input asp-for="Id" type="hidden" />
+            <input asp-for="@Model.Id" type="hidden" />
+            <input asp-for="@Model.InstructorId" type="hidden" />
+
             <div class="mb-4 text-center" >
                 @if (!String.IsNullOrEmpty(Model.ImgUrl))
                 {
@@ -26,9 +28,8 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Instructor!.FullName" class="form-label">Instructor Name</label>
-                <input type="" asp-for="Instructor!.FullName" class="form-control" readonly/>
-                <span asp-validation-for="Instructor!.FullName" class="text-danger"></span>
+                <label class="form-label">Instructor Name</label>
+                <input class="form-control" value="@ViewData["instructorName"]" readonly />
             </div>
 
             <div class="mb-3">

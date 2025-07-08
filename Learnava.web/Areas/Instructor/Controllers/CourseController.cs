@@ -1,6 +1,7 @@
 ﻿using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess;
 using Learnava.DataAccess.Data.Entities;
+using Learnava.web.VMModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,18 +37,20 @@ namespace Learnava.web.Areas.Instructor.Controllers
         {
             var course = await _courseService.GetCourseByIdAsync(courseId);
             string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+            ApplicationUser? user = await _userManager.FindByIdAsync(userId);
+            ViewData["instructorName"] = user?.FullName;
+
             if (course == null)
                 course = new()
                 {
                     CreatedAt = DateTime.UtcNow,
-                    Instructor = await _userManager.FindByIdAsync(userId),
                     InstructorId = userId,
                     
                 };
             else
             {
 
-                if (userId != course.InstructorId && !User.IsInRole("Admin"))
+                if (userId != course.InstructorId && !User.IsInRole(SD.Role_Admin))
                     return Forbid();
 
             }
@@ -69,7 +72,6 @@ namespace Learnava.web.Areas.Instructor.Controllers
             if(course.Id == 0)
             {
                 var courseAfterAdding = await _courseService.AddCourseAsync(course);
-                course.Id = courseAfterAdding.Id;
             }
 
             string wwwRootPath = _webHostEnvironment.WebRootPath;

@@ -16,9 +16,9 @@ namespace Learnava.BusinessLogic.Services
             _courseRepository = courseRepository;
         }
 
-        async Task<Course?> ICourseService.GetCourseByIdAsync(int? id)
+        public async Task<Course?> GetCourseByIdAsync(int? id, string? included = null)
         {
-            var courseFromDb = await _courseRepository.GetAsync(c => c.Id == id, includeProperties: "Instructor");
+            var courseFromDb = await _courseRepository.GetAsync(c => c.Id == id, includeProperties: included);
             return courseFromDb;
         }
 

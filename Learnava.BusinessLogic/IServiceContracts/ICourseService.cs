@@ -8,7 +8,7 @@ namespace Learnava.BusinessLogic.IServiceContracts
     {
         Task<IEnumerable<Course>> GetCoursesAsync();
 
-        Task<Course?> GetCourseByIdAsync(int? id);
+        Task<Course?> GetCourseByIdAsync(int? id,string? included = null);
 
         Task<Course> AddCourseAsync(Course course);
 
