@@ -1,11 +1,9 @@
 ﻿
 using Learnava.DataAccess.Data.Configurations;
 using Learnava.DataAccess.Data.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
+
 
 namespace Learnava.DataAccess.Data
 {
@@ -22,6 +20,8 @@ namespace Learnava.DataAccess.Data
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Student> Students { get; set; }
+
+        public DbSet<Video> Videos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

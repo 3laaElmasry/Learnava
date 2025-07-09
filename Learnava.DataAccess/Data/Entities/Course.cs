@@ -23,5 +23,8 @@ namespace Learnava.DataAccess.Data.Entities
         [ValidateNever]
 
         public IEnumerable<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+        [ValidateNever]
+        public IEnumerable<Video> Videos { get; set; } = new List<Video>();
     }
 }
