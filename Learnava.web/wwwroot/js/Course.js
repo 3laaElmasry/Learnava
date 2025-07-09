@@ -37,6 +37,9 @@ function loadDataTable() {
 								   class="btn btn-danger mx-2 ">
 									<i class="bi bi-trash-fill"></i> Delete
 								</a>
+                                 <a href="/Instructor/Video/Index?courseId=${data}" class="btn btn-info mx-2">
+                                    <i class="bi bi-camera-video-fill"></i> Videos
+                                </a>
 							</div>`
                 },
                 "width": "25%"
