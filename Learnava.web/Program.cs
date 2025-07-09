@@ -50,6 +50,7 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IVideoService, VideoService>();
 
 //Enject Repositries
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
