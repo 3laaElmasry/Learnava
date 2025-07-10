@@ -13,5 +13,8 @@ namespace Learnava.BusinessLogic.IServiceContracts
         Task<Video?> UpdateVideoAsync(int videoId, Video newVideo);
 
         Task<bool> DeleteVideoAsync(int videoId);
+
+
+        Task<Video> AddVideoAsync(Video newVideo);
     }
 }

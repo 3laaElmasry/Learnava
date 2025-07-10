@@ -15,6 +15,13 @@ namespace Learnava.BusinessLogic.Services
             _videoRepository = videoRepository;
         }
 
+        public async Task<Video> AddVideoAsync(Video newVideo)
+        {
+            await _videoRepository.AddAsync(newVideo);
+            await _videoRepository.Save();
+            return newVideo;
+        }
+
         public async Task<bool> DeleteVideoAsync(int videoId)
         {
             var videoFromDb = await _videoRepository.GetAsync(v => v.Id == videoId);

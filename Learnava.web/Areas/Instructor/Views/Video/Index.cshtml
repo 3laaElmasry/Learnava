@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Video>
+@{
+    ViewData["Title"] = "Videos";
+    var courseName = ViewData["courseName"] as string;
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="text-primary">Videos for: <span class="text-secondary">@courseName</span></h3>
+        <a asp-area="Instructor" asp-controller="Video" asp-action="Upsert" asp-route-courseId="@Model.FirstOrDefault()?.CourseId"
+           class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Create Video
+        </a>
+    </div>
+
+    <table id="tblData" class="table table-bordered table-striped w-100">
+        <thead>
+            <tr>
+                <th class="text-secondary">Title</th>
+                <th class="text-secondary">URL</th>
+                <th class="text-secondary">Position</th>
+                <th class="text-secondary">Course ID</th>
+                <th class="text-secondary text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var video in Model)
+            {
+                <tr>
+                    <td>@video.Title</td>
+                    <td>
+                        <a href="@video.Url" target="_blank" class="text-decoration-none">
+                            @video.Url
+                        </a>
+                    </td>
+                    <td>@video.Position</td>
+                    <td>@video.CourseId</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-area="Instructor" asp-controller="Video" asp-action="Upsert" asp-route-id="@video.Id"
+                               class="btn btn-sm btn-primary mx-1">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a onclick="Delete('/Instructor/Video/Delete?id=@video.Id')"
+                               class="btn btn-sm btn-danger mx-1">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        function Delete(url) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This video will be permanently deleted.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: "DELETE",
+                        success: function (data) {
+                            toastr.success(data.message);
+                            location.reload();
+                        },
+                        error: function () {
+                            toastr.error("Failed to delete video.");
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}
