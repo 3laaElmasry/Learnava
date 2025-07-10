@@ -113,6 +113,19 @@ namespace Learnava.web.Areas.Instructor.Controllers
             return RedirectToAction("Index", new { courseId = vm.Video.CourseId });
         }
 
+        [HttpDelete]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            bool isDeleted = await _videoService.DeleteVideoAsync(id);
+            if (!isDeleted)
+            {
+                return Json(new { success = false, message = "Video not found." });
+            }
+
+            return Json(new { success = true, message = "Video deleted successfully." });
+        }
 
     }
 }
