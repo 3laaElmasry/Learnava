@@ -1,35 +1,64 @@
 ﻿
 using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess.Data.Entities;
+using Learnava.DataAccess.RepositoryContracts;
 using System.Linq.Expressions;
 
 namespace Learnava.BusinessLogic.Services
 {
     public class VideoService : IVideoService
     {
-        public Task<bool> DeleteVideoAsync(int videoId)
+        private readonly IVideoRepository _videoRepository;
+
+        public VideoService(IVideoRepository videoRepository)
         {
-            throw new NotImplementedException();
+            _videoRepository = videoRepository;
         }
 
-        public Task<Video> GetVideoAsync(Expression<Func<Video, bool>>? filter = null, string? included = null)
+        public async Task<bool> DeleteVideoAsync(int videoId)
         {
-            throw new NotImplementedException();
+            var videoFromDb = await _videoRepository.GetAsync(v => v.Id == videoId);
+
+            if (videoFromDb == null)
+            {
+                return false;
+            }
+            _videoRepository.Remove(videoFromDb);
+            await _videoRepository.Save();
+            return true;
         }
 
-        public Task<Video> GetVideoByIdAsync(int videoId)
+        public async Task<Video?> GetVideoByIdAsync(int videoId)
         {
-            throw new NotImplementedException();
+            var videoFromDb = await _videoRepository.GetAsync(v => v.Id == videoId);
+            if(videoFromDb == null)
+            {
+                return null;
+            }
+            return videoFromDb;
         }
 
-        public Task<IEnumerable<Video>> GetVideosAsync(Expression<Func<Video, bool>>? filter = null, string? included = null)
+        public async Task<IEnumerable<Video>> GetVideosAsync(Expression<Func<Video, bool>>? filter = null, string? included = null)
         {
-            throw new NotImplementedException();
+            var videosFromDb = await _videoRepository.GetAllAsync(filter, included);
+
+            return videosFromDb;
         }
 
-        public Task<Video> UpdateVideoAsync(int videoId, Video newVideo)
+        public async Task<Video?> UpdateVideoAsync(int videoId, Video newVideo)
         {
-            throw new NotImplementedException();
+            var videoFromDb = await _videoRepository.GetAsync(v => v.Id == videoId);
+            if( videoFromDb == null)
+            {
+                return null;
+            }
+            videoFromDb.Title = newVideo.Title;
+            videoFromDb.Url = newVideo.Url;
+            videoFromDb.Position = newVideo.Position;
+            
+            _videoRepository.Update(newVideo);
+            await _videoRepository.Save();
+            return videoFromDb;
         }
     }
 }
