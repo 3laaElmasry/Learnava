@@ -1,0 +1,56 @@
+﻿@model VideoUpsertViewModel
+
+@{
+    ViewData["Title"] = Model.Video.Id == 0 ? "Create Video" : "Edit Video";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3 class="text-primary mb-4">@ViewData["Title"]</h3>
+
+            <form asp-action="Upsert" method="post">
+                <input type="hidden" asp-for="Video.Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Video.Title" class="form-label text-secondary"></label>
+                    <input asp-for="Video.Title" class="form-control" />
+                    <span asp-validation-for="Video.Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Video.Url" class="form-label text-secondary"></label>
+                    <input asp-for="Video.Url" class="form-control" />
+                    <span asp-validation-for="Video.Url" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Video.Position" class="form-label text-secondary"></label>
+                    <input asp-for="Video.Position" class="form-control" type="number" min="1" />
+                    <span asp-validation-for="Video.Position" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Video.CourseId" class="form-label text-secondary">Course</label>
+                    <select asp-for="Video.CourseId" asp-items="Model.CourseList" class="form-select">
+                        <option disabled selected>-- Select Course --</option>
+                    </select>
+                    <span asp-validation-for="Video.CourseId" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" asp-route-courseId="@Model.Video.CourseId" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

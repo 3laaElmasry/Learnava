@@ -1,0 +1,31 @@
+﻿@* Views/Shared/_Notification.cshtml *@
+@{
+    var success = TempData["success"] as string;
+    var error = TempData["error"] as string;
+    var warning = TempData["warning"] as string;
+    var info = TempData["info"] as string;
+}
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        @if (!string.IsNullOrEmpty(success))
+        {
+            <text>toastr.success("@success");</text>
+        }
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <text>toastr.error("@error");</text>
+        }
+        @if (!string.IsNullOrEmpty(warning))
+        {
+            <text>toastr.warning("@warning");</text>
+        }
+        @if (!string.IsNullOrEmpty(info))
+        {
+            <text>toastr.info("@info");</text>
+        }
+        });
+    </script>
+}

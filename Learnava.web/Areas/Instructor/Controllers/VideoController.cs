@@ -1,7 +1,10 @@
 ﻿using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess;
+using Learnava.DataAccess.Data.Entities;
+using Learnava.web.VMModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Learnava.web.Areas.Instructor.Controllers
 {
@@ -36,6 +39,78 @@ namespace Learnava.web.Areas.Instructor.Controllers
             ViewData["courseName"] = course.Title;
             var videos = await _videoService.GetVideosAsync(v => v.CourseId == course.Id);
             return View(videos);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Upsert(int? id, int? courseId)
+        {
+            string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+
+            var courses = await _courseService.GetCoursesAsync(v => v.InstructorId == userId || User.IsInRole(SD.Role_Admin));
+            var courseList = courses.Select(c => new SelectListItem
+            {
+                Text = c.Title,
+                Value = c.Id.ToString()
+            });
+
+            if (id == null)
+            {
+
+                var viewModel = new VideoUpsertViewModel
+                {
+                    Video = new Video(),
+
+
+                    CourseList = courseList
+                };
+
+                return View(viewModel);
+            }
+
+            var video = await _videoService.GetVideoByIdAsync(id.Value);
+            if (video == null)
+                return NotFound();
+
+            var editViewModel = new VideoUpsertViewModel
+            {
+                Video = video,
+                CourseList = courseList
+            };
+
+            return View(editViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upsert(VideoUpsertViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+
+                var courses = await _courseService.GetCoursesAsync(v => v.InstructorId == userId || User.IsInRole(SD.Role_Admin));
+
+                vm.CourseList = courses.Select(c => new SelectListItem
+                {
+                    Text = c.Title,
+                    Value = c.Id.ToString()
+                });
+
+                return View(vm);
+            }
+
+            if (vm.Video.Id == 0)
+            {
+                vm.Video.UploadedAt = DateTime.UtcNow;
+                await _videoService.AddVideoAsync(vm.Video);
+                TempData["success"] = "Video created successfully.";
+            }
+            else
+            {
+                 await _videoService.UpdateVideoAsync(vm.Video.Id,vm.Video);
+                TempData["success"] = "Video updated successfully.";
+            }
+
+            return RedirectToAction("Index", new { courseId = vm.Video.CourseId });
         }
 
 
