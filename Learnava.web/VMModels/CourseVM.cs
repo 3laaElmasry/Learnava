@@ -4,7 +4,10 @@ namespace Learnava.web.VMModels
 {
     public class CourseVM
     {
-        public Course? course;
+        public Course? Course { get; set; }
+
         public string InstructorName { get; set; } = string.Empty;
+
+
     }
 }

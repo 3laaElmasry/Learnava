@@ -221,6 +221,28 @@ namespace Learnava.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Videos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UploadedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Videos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Videos_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrollments",
                 columns: table => new
                 {
@@ -309,6 +331,11 @@ namespace Learnava.DataAccess.Migrations
                 table: "Students",
                 column: "ApplicationUserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Videos_CourseId",
+                table: "Videos",
+                column: "CourseId");
         }
 
         /// <inheritdoc />
@@ -336,13 +363,16 @@ namespace Learnava.DataAccess.Migrations
                 name: "Instructors");
 
             migrationBuilder.DropTable(
+                name: "Videos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Students");
 
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
