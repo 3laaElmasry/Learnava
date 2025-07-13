@@ -13,6 +13,7 @@ namespace Learnava.DataAccess.Data.Entities
 
         public int StudentId { get; set; }
 
+        public DateTime EnrollDate { get; set; }
 
         [ValidateNever]
         public Student? Student { get; set; }
