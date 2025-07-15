@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
+using Learnava.DataAccess.Repository;
 
 namespace Learnava.web.Areas.Instructor.Controllers
 {
@@ -37,11 +38,13 @@ namespace Learnava.web.Areas.Instructor.Controllers
             {
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
-
-            ViewData["courseName"] = course.Title;
             var videos = await _videoService.GetVideosAsync(v => v.CourseId == course.Id);
-            return View(videos);
-            return View();
+            VideoIndexVM videosVM = new VideoIndexVM
+            {
+                course = course,
+                Videos = videos
+            };
+            return View(videosVM);
         }
 
         [HttpGet]
@@ -56,13 +59,20 @@ namespace Learnava.web.Areas.Instructor.Controllers
                 Value = c.Id.ToString()
             });
 
+            if (courseId is null)
+            {
+                return NotFound();
+            }
+            
             if (id == null)
             {
 
                 var viewModel = new VideoUpsertViewModel
                 {
-                    Video = new Video(),
-
+                    Video = new Video()
+                    {
+                        CourseId = courseId.Value
+                    },
 
                     CourseList = courseList
                 };
