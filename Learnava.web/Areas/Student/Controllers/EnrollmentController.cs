@@ -3,10 +3,9 @@ using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess;
 using Learnava.DataAccess.Data.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace Learnava.web.Areas.Student.Controllers
-{
 { 
     public class EnrollmentController : Controller
     {
