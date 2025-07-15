@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Enrollment List";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary bg-gradient py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                @if (!User.IsInRole(SD.Role_Admin))
+                {
+                    <h2 class="text-white py-2">@ViewData["instructorName"] Enrollments</h2>
+                }
+                else
+                {
+                    <h2 class="text-white py-2">Admin Access</h2>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6"></div>
+            <div class="col-6 text-end">
+                <a asp-controller="Enrollment" asp-action="Upsert" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Create Enrollment
+                </a>
+            </div>
+        </div>
+
+        <table id="tblData" class="table table-bordered table-striped w-100">
+            <thead>
+                <tr>
+                    <th class="text-secondary">Instructor Name</th>
+                    <th class="text-secondary">Instructor Email</th>
+                    <th class="text-secondary">Student Name</th>
+                    <th class="text-secondary">Student Email</th>
+                    <th class="text-secondary">Course Title</th>
+                    <th class="text-secondary">Enroll Date</th>
+                    <th class="text-secondary text-center">Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Enrollment.js"></script>
+}
