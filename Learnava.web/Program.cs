@@ -51,6 +51,7 @@ builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IVideoService, VideoService>();
+builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 
 //Enject Repositries
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
