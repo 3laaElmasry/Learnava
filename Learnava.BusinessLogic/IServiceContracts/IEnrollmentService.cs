@@ -15,5 +15,9 @@ namespace Learnava.BusinessLogic.IServiceContracts
         Task<Enrollment> CreateAsync(Enrollment enrollment);
 
         Task<bool> DeleteEnrollmentAsync(int enrollmentId);
+
+
+        Task<Enrollment?> GetEnrollmentAsync(Expression<Func<Enrollment, bool>> enrollmentFilter, string? included = null);
+
     }
 }

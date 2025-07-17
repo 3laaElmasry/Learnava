@@ -13,12 +13,12 @@ function loadEnrollmentTable() {
             error: function (xhr, error, thrown) {
                 console.error("Error loading enrollment data:", error);
             }
-        },                 
-        searching: true,   
-        lengthChange: true,
-        paging: true,      
+        },
+        searching: false,   
+        lengthChange: false,
+        paging: false,      
         pageLength: 10,    
-        info: true,        
+        info: false,        
         columns: [
             { data: 'instructorName', width: "15%" },
             { data: 'instructorEmail', width: "20%" },

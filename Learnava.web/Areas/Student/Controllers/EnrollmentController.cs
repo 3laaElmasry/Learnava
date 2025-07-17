@@ -111,6 +111,28 @@ namespace Learnava.web.Areas.Student.Controllers
             return Json(new { data = result });
 
         }
+
+        [HttpDelete]
+        [Authorize(Roles = $"{SD.Role_Admin},{SD.Role_Student}")]  
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var enrollment = await _enrollmentService.GetEnrollmentAsync(e => e.Id == id, included: "Student");
+
+            if(enrollment is null)
+            {
+                return NotFound();
+            }
+
+            if(enrollment.Student!.ApplicationUserId != userId && !User.IsInRole(SD.Role_Admin))
+            {
+                return BadRequest();
+            }
+            var isDeleted = await _enrollmentService.DeleteEnrollmentAsync(id);
+            return Json(new { success = (isDeleted is true) ? true : false, message = (isDeleted is true) ? "Delete Success" : "Deleted Fail" });
+
+        }
         #endregion
 
     }

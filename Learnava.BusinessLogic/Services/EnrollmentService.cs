@@ -23,9 +23,30 @@ namespace Learnava.BusinessLogic.Services
 
         }
 
-        public Task<bool> DeleteEnrollmentAsync(int enrollmentId)
+        public Task<bool> DeleteEnrollmentAsync(string userId,int enrollmentId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteEnrollmentAsync(int enrollmentId)
+        {
+            var enrollFromDb = await _enrollmentRepository.GetAsync(e => e.Id == enrollmentId);
+            if(enrollFromDb == null)
+            {
+                return false;
+
+            }
+
+            _enrollmentRepository.Remove(enrollFromDb);
+            await _enrollmentRepository.Save();
+            return true;
+        }
+
+        public async Task<Enrollment?> GetEnrollmentAsync(Expression<Func<Enrollment, bool>> enrollmentFilter, string? included = null)
+        {
+            var enroll = await _enrollmentRepository.GetAsync(enrollmentFilter,included);
+
+            return enroll;
         }
 
         public async Task<IEnumerable<Enrollment>> GetEnrollmentsAsync(Expression<Func<Enrollment, bool>>? enrollmentFilter = null, string? included = null)
