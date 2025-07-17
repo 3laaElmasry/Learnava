@@ -25,14 +25,22 @@
                     }
                 </div>
 
-                <div class="p-2 mt-2">
-                    <a asp-controller="Courses"
+                <div class="d-flex gap-2 mt-2">
+                    <a asp-controller="Home"
+                       asp-action="Details"
+                       asp-route-courseId="@course.Id"
+                       class="btn btn-primary flex-fill">
+                        Course Details
+                    </a>
+
+                    <a asp-controller="Home"
                        asp-action="Details"
                        asp-route-id="@course.Id"
-                       class="btn btn-primary w-100">
-                        View Course
+                       class="btn btn-secondary flex-fill">
+                        Enroll
                     </a>
                 </div>
+
             </div>
         </div>
     }

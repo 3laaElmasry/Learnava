@@ -20,6 +20,21 @@ namespace Learnava.web.Areas.User.Controllers
             var courses = await _courseService.GetCoursesAsync();
             return View(courses);
         }
+        
+
+        public async Task<IActionResult> Details(int? courseId)
+        {
+            if (courseId is null)
+                return NotFound();
+
+            var course = await _courseService
+                .GetCourseByIdAsync(courseId,included:"Instructor");
+
+            if (course is null)
+                return NotFound();
+
+            return View(course);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
