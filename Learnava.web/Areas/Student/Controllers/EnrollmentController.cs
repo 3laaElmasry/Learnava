@@ -3,29 +3,77 @@ using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess;
 using Learnava.DataAccess.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 namespace Learnava.web.Areas.Student.Controllers
-{ 
+{
+
+    [Area("Student")]
+    [Authorize]
     public class EnrollmentController : Controller
     {
         private readonly IEnrollmentService _enrollmentService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IStudentService _studentService;
 
-        public EnrollmentController(IEnrollmentService enrollmentService, UserManager<ApplicationUser> userManager)
+        public EnrollmentController(IEnrollmentService enrollmentService, UserManager<ApplicationUser> userManager
+            ,IStudentService studentService)
         {
             _enrollmentService = enrollmentService;
             _userManager = userManager;
+            _studentService = studentService;
         }
 
+        [Authorize(Roles = $"{SD.Role_Admin}, {SD.Role_Student}")]
         public IActionResult Index()
         {
             return View();
         }
 
 
+        [Authorize(Roles =$"{SD.Role_Student}")]
+
+        [HttpPost]
+        public async Task<IActionResult> Create(int courseId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var student = await _studentService.GetStudentAsync(s => s.ApplicationUserId == userId);
+
+            if(student == null)
+            {
+                return NoContent();
+            }
+
+            var alreadyEnrolled = await _enrollmentService.IsUserEnrolledAsync(courseId, student.Id);
+            if (alreadyEnrolled)
+            {
+                TempData["Error"] = "You are already enrolled in this course.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var enrollment = new Enrollment
+            {
+                CourseId = courseId,
+                StudentId = student.Id,
+                EnrollDate = DateTime.UtcNow
+            };
+
+            await _enrollmentService.CreateAsync(enrollment);
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+
+
+
 
         #region Api calls
+        [Authorize(Roles = $"{SD.Role_Admin}, {SD.Role_Student}")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<Enrollment> enrollments;
@@ -40,12 +88,13 @@ namespace Learnava.web.Areas.Student.Controllers
                 enrollments = await _enrollmentService
                     .GetEnrollmentsAsync(e => e.Student!.ApplicationUserId == userId, included: "Student,Course");
             }
-            var result = await Task.WhenAll(enrollments.Select(async e =>
+            var result = new List<object>();
+            foreach (var e in enrollments)
             {
                 var instructor = await _userManager.FindByIdAsync(e.Course!.InstructorId);
                 var student = await _userManager.FindByIdAsync(e.Student!.ApplicationUserId);
 
-                return new
+                result.Add(new
                 {
                     instructorName = instructor?.FullName,
                     instructorEmail = instructor?.Email,
@@ -55,8 +104,9 @@ namespace Learnava.web.Areas.Student.Controllers
                     e.CourseId,
                     e.EnrollDate,
                     courseTitle = e.Course.Title
-                };
-            }));
+                });
+            }
+
 
             return Json(new { data = result });
 

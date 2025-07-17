@@ -3,6 +3,7 @@
 using Learnava.BusinessLogic.IServiceContracts;
 using Learnava.DataAccess.Data.Entities;
 using Learnava.DataAccess.RepositoryContracts;
+using System.Linq.Expressions;
 
 namespace Learnava.BusinessLogic.Services
 {
@@ -24,6 +25,14 @@ namespace Learnava.BusinessLogic.Services
             await _studentRepository.AddAsync(newStudent);
             await _studentRepository.Save();
             return newStudent;
+        }
+
+        public async Task<Student?> GetStudentAsync(Expression<Func<Student, bool>> studentFilter = null, string? included = null)
+        {
+            var studentFromDb = await _studentRepository
+                .GetAsync(studentFilter,included);
+
+            return studentFromDb;
         }
     }
 }

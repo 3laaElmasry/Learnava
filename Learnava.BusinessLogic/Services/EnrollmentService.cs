@@ -15,17 +15,15 @@ namespace Learnava.BusinessLogic.Services
             _enrollmentRepository = enrollmentRepository;
         }
 
-        public Task<Enrollment> AddEnrollmentAsync(Enrollment enrollment)
+        public async Task<Enrollment> CreateAsync(Enrollment enrollment)
         {
-            throw new NotImplementedException();
+            await _enrollmentRepository.AddAsync(enrollment);
+            await _enrollmentRepository.Save();
+            return enrollment;
+
         }
 
         public Task<bool> DeleteEnrollmentAsync(int enrollmentId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Enrollment?> GetEnrollmentByIdAsync(int? id, string? included = null)
         {
             throw new NotImplementedException();
         }
@@ -36,9 +34,12 @@ namespace Learnava.BusinessLogic.Services
             return enrollmentsFromDb;
         }
 
-        public Task<Enrollment> UpdateEnrollmentAsync(Enrollment enrollment)
+        public async Task<bool> IsUserEnrolledAsync(int courseId, int studentid)
         {
-            throw new NotImplementedException();
+           var enroll = await _enrollmentRepository
+                .GetAsync(e => e.CourseId == courseId &&  e.StudentId == studentid);
+
+            return enroll is null ? false : true;
         }
     }
 }

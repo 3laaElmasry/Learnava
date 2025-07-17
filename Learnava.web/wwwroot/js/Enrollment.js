@@ -19,12 +19,12 @@ function loadEnrollmentTable() {
         paging: true,      
         pageLength: 10,    
         info: true,        
-
         columns: [
             { data: 'instructorName', width: "15%" },
             { data: 'instructorEmail', width: "20%" },
             { data: 'studentName', width: "15%" },
             { data: 'studentEmail', width: "20%" },
+            { data: 'courseTitle', width: "15%" },
             {
                 data: 'enrollDate',
                 render: function (data) {
@@ -32,25 +32,25 @@ function loadEnrollmentTable() {
                 },
                 width: "10%"
             },
-            { data: 'courseTitle', width: "15%" },
             {
                 data: 'id',
                 render: function (data, type, row) {
                     return `
-                        <div class="btn-group w-100" role="group">
-                            <a href="/Student/Enrollment/Upsert?id=${data}" class="btn btn-sm btn-primary mx-1">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <a onClick="Delete('/Student/Enrollment/Delete?id=${data}')" class="btn btn-sm btn-danger mx-1">
-                                <i class="bi bi-trash-fill"></i> Delete
-                            </a>
-                        </div>
-                    `;
+                <div class="btn-group w-100" role="group">
+                    <a href="/Student/Enrollment/Upsert?id=${data}" class="btn btn-sm btn-outline-primary mx-1">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </a>
+                    <a onClick="Delete('/Student/Enrollment/Delete?id=${data}')" class="btn btn-sm btn-outline-danger mx-1">
+                        <i class="bi bi-trash-fill"></i> Delete
+                    </a>
+                </div>
+            `;
                 },
                 orderable: false,
                 width: "20%"
             }
         ]
+
     });
 }
 

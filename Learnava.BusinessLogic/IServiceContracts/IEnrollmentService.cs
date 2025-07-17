@@ -10,11 +10,9 @@ namespace Learnava.BusinessLogic.IServiceContracts
     {
         Task<IEnumerable<Enrollment>> GetEnrollmentsAsync(Expression<Func<Enrollment, bool>>? enrollmentFilter = null, string? included = null);
 
-        Task<Enrollment?> GetEnrollmentByIdAsync(int? id, string? included = null);
+        Task<bool> IsUserEnrolledAsync(int courseId, int studentid);
 
-        Task<Enrollment> AddEnrollmentAsync(Enrollment enrollment);
-
-        Task<Enrollment> UpdateEnrollmentAsync(Enrollment enrollment);
+        Task<Enrollment> CreateAsync(Enrollment enrollment);
 
         Task<bool> DeleteEnrollmentAsync(int enrollmentId);
     }

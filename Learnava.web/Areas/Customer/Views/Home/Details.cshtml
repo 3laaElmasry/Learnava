@@ -33,9 +33,16 @@
                         <a asp-action="Index" class="btn btn-outline-secondary">
                             <i class="bi bi-arrow-left"></i> Back
                         </a>
-                        <a asp-controller="Home" asp-action="Enroll" asp-route-id="@Model.Id" class="btn btn-success">
-                            <i class="bi bi-check-circle"></i> Enroll Now
-                        </a>
+                        <form asp-area="Student"
+                              asp-controller="Enrollment"
+                              asp-action="Create"
+                              asp-route-courseId="@Model.Id"
+                              method="post"
+                              class="flex-fill">
+                            <button type="submit" class="btn btn-secondary w-100">
+                                <i class="bi bi-check-circle"></i> Enroll Now
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

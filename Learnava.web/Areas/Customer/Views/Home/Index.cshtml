@@ -33,12 +33,17 @@
                         Course Details
                     </a>
 
-                    <a asp-controller="Home"
-                       asp-action="Details"
-                       asp-route-id="@course.Id"
-                       class="btn btn-secondary flex-fill">
-                        Enroll
-                    </a>
+                    <form asp-area="Student"
+                          asp-controller="Enrollment"
+                          asp-action="Create"
+                          asp-route-courseId="@course.Id"
+                          method="post"
+                          class="flex-fill">
+                        <button type="submit" class="btn btn-secondary w-100">
+                            Enroll
+                        </button>
+                    </form>
+
                 </div>
 
             </div>
