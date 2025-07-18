@@ -17,13 +17,15 @@ namespace Learnava.web.Areas.Student.Controllers
         private readonly IEnrollmentService _enrollmentService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IStudentService _studentService;
+        private readonly ICourseService _courseService;
 
         public EnrollmentController(IEnrollmentService enrollmentService, UserManager<ApplicationUser> userManager
-            ,IStudentService studentService)
+            ,IStudentService studentService, ICourseService courseService)
         {
             _enrollmentService = enrollmentService;
             _userManager = userManager;
             _studentService = studentService;
+            _courseService = courseService;
         }
 
         [Authorize(Roles = $"{SD.Role_Admin}, {SD.Role_Student}")]

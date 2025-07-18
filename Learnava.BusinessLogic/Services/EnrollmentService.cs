@@ -10,6 +10,7 @@ namespace Learnava.BusinessLogic.Services
     {
         private readonly IEnrollmentRepository _enrollmentRepository;
 
+
         public EnrollmentService(IEnrollmentRepository enrollmentRepository)
         {
             _enrollmentRepository = enrollmentRepository;
