@@ -35,16 +35,18 @@ function loadEnrollmentTable() {
             {
                 data: 'id',
                 render: function (data, type, row) {
+                    const courseId = row.courseId;
                     return `
-                <div class="btn-group w-100" role="group">
-                    <a href="/Student/Enrollment/Upsert?id=${data}" class="btn btn-sm btn-outline-primary mx-1">
-                        <i class="bi bi-pencil-square"></i> Edit
-                    </a>
-                    <a onClick="Delete('/Student/Enrollment/Delete?id=${data}')" class="btn btn-sm btn-outline-danger mx-1">
-                        <i class="bi bi-trash-fill"></i> Delete
-                    </a>
-                </div>
-            `;
+                        <div class="btn-group w-100" role="group">
+                            <a href="/Student/Enrollment/CourseContent?courseId=${courseId}" class="btn btn-sm btn-outline-primary mx-1">
+                                <i class="bi bi-journal-text"></i> Course Content
+                            </a>
+                            <a onClick="Delete('/Student/Enrollment/Delete?id=${data}')" class="btn btn-sm btn-outline-danger mx-1">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </a>
+                       </div>
+                         `;
+
                 },
                 orderable: false,
                 width: "20%"

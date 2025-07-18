@@ -68,8 +68,35 @@ namespace Learnava.web.Areas.Student.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CourseContent(int courseId)
+        {
+            var course = await _courseService.GetCourseByIdAsync(courseId,included: "Videos");
 
+            if(course is null)
+            {
+                return NoContent();
+            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            var student = await _studentService.GetStudentAsync(s => s.ApplicationUserId == userId);
+
+            if (student is null)
+            {
+                if (!User.IsInRole(SD.Role_Admin) && course.InstructorId != userId)
+                {
+                    return NotFound();
+                }
+                return View(course);
+            }
+            var enroll = await _enrollmentService.IsUserEnrolledAsync(courseId, student.Id);
+
+            if(!enroll)
+            {
+                return NotFound();
+            }
+            return View(course);
+        }
 
 
 
