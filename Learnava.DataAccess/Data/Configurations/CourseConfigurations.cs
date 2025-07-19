@@ -17,7 +17,7 @@ namespace Learnava.DataAccess.Data.Configurations
                 .IsRequired();
 
             builder.Property(c => c.Description)
-               .HasMaxLength(200)
+               .HasColumnType("nvarchar(max)")
                .IsRequired();
 
             builder.Property(c => c.CreatedAt)

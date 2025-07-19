@@ -80,29 +80,24 @@ namespace Learnava.web.Areas.Instructor.Controllers
             }
 
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            string coursePath = @"Images/Courses/Course-" + course.Id.ToString();
-
+            string coursePath = @"Images/Courses/Course-" + course.Id;
             string finalPath = Path.Combine(wwwRootPath, coursePath);
 
-            // Create directory if it doesn't exist
             Directory.CreateDirectory(finalPath);
 
-            if(file is not null)
+            if (file is not null)
             {
                 string extension = Path.GetExtension(file.FileName).ToLower();
-
-                // Generate unique file name and save file
                 string fileName = Guid.NewGuid().ToString() + extension;
                 string filePath = Path.Combine(finalPath, fileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
 
-                }
-                course.ImgUrl = @"/" + coursePath + "/" + fileName;
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
 
+                course.ImgUrl = Path.Combine("/Images/Courses/Course-" + course.Id, fileName).Replace("\\", "/");
                 await _courseService.UpdateCourseAsync(course);
             }
+
 
             return RedirectToAction(nameof(Index));
 
