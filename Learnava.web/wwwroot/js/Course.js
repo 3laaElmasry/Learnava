@@ -11,7 +11,7 @@ function loadDataTable() {
                 console.log("Error loading data: ", error);
             }
         },
-        searching: false,     
+        searching: true,
         lengthChange: false,  
         paging: true,         
         pageLength: 10,

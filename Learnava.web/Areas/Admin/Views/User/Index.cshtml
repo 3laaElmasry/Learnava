@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Users List";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary bg-gradient py-3 text-center">
+        <h2 class="text-white py-2">
+            <i class="bi bi-people-fill me-2"></i> Users Dashboard
+        </h2>
+    </div>
+
+    <div class="card-body p-4">
+        <table id="tblData" class="table table-bordered table-hover table-striped w-100">
+            <thead class="table-light">
+                <tr>
+                    <th class="text-secondary">Name</th>
+                    <th class="text-secondary">Email</th>
+                    <th class="text-secondary">Phone Number</th>
+                    <th class="text-secondary">Role</th>
+                    <th class="text-secondary text-center">Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/User.js"></script>
+}

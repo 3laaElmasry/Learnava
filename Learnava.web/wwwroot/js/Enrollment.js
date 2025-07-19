@@ -14,7 +14,7 @@ function loadEnrollmentTable() {
                 console.error("Error loading enrollment data:", error);
             }
         },
-        searching: false,   
+        searching: true,   
         lengthChange: false,
         paging: false,      
         pageLength: 10,    
