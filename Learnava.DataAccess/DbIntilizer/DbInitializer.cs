@@ -72,7 +72,7 @@ namespace Learnava.DataAccess.DbIntilizer
                 {
                     UserName = "admin@learnava.com",
                     Email = "admin@learnava.com",
-                    FullName = "Admin User",
+                    FullName = "Admin",
                     PhoneNumber = "+201000000000",
                     Role = SD.Role_Admin,
                     EmailConfirmed = true
@@ -85,23 +85,39 @@ namespace Learnava.DataAccess.DbIntilizer
                 }
 
                 // Seed Instructor
-                var instructorUser = new ApplicationUser
+                var instructorUser1 = new ApplicationUser
                 {
-                    UserName = "ins@learnava.com",
-                    Email = "ins@learnava.com",
-                    FullName = "Moshrif",
+                    UserName = "ins1@learnava.com",
+                    Email = "ins1@learnava.com",
+                    FullName = "ins1",
                     PhoneNumber = "+201111111133",
                     Role = SD.Role_Instructor,
                     EmailConfirmed = true
                 };
-                if (await _userManager.FindByEmailAsync(instructorUser.Email) == null)
+                var instructorUser2 = new ApplicationUser
                 {
-                    var result = await _userManager.CreateAsync(instructorUser, "ins123");
-                    if (result.Succeeded)
-                        await _userManager.AddToRoleAsync(instructorUser, SD.Role_Instructor);
+                    UserName = "ins2@learnava.com",
+                    Email = "ins2@learnava.com",
+                    FullName = "ins2",
+                    PhoneNumber = "+201111111133",
+                    Role = SD.Role_Instructor,
+                    EmailConfirmed = true
+                };
+                if (await _userManager.FindByEmailAsync(instructorUser1.Email) == null)
+                {
+                    var result1 = await _userManager.CreateAsync(instructorUser1, "ins123");
+                    var result2 = await _userManager.CreateAsync(instructorUser2, "ins123");
+
+                    if (result1.Succeeded && result2.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(instructorUser1, SD.Role_Instructor);
+                        await _userManager.AddToRoleAsync(instructorUser2, SD.Role_Instructor);
+
+                    }
+
                 }
 
-               
+
             }
             catch (Exception ex)
             {
